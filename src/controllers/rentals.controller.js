@@ -6,6 +6,10 @@ export async function create (req, res) {
     const rentDate = dayjs().format('YYYY-MM-DD')
     let pricePerDay
 
+    if (daysRented <= 0) {
+        return res.sendStatus(400);
+    }
+
     try {
         const { rows } = await connection.query(
             `SELECT * FROM games WHERE id=$1;`,
