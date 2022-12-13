@@ -3,6 +3,10 @@ import { connection } from "../database/db.js";
 export async function create (req, res) {
     const { name, image, stockTotal, categoryId, pricePerDay } = req.body;
 
+    if (!name || stockTotal < 0 || pricePerDay < 0) {
+        return res.sendStatus(400)
+    }
+
     try {
         await connection.query(
             `INSERT INTO games 
