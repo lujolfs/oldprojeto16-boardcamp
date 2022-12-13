@@ -29,6 +29,10 @@ export async function findAll (req, res) {
 export async function findById (req, res) {
     const { id } = req.params;
 
+    if (!id) {
+        return res.sendStatus(404);
+    }
+
     try {
         const { rows } = await connection.query(
             `SELECT * FROM customers WHERE id=$1;`,
