@@ -52,6 +52,10 @@ export async function update (req, res) {
     const { name, phone, cpf, birthday } = req.body;
     const { id } = req.params;
 
+    if (cpf.length !== 11 || phone.length !== (10 || 11) || name.length === 0) {
+        return res.sendStatus(400);
+    }
+
     try {
         await connection.query(
             `UPDATE customers SET name=$1, phone=$2, cpf=$3, birthday=$4 WHERE id=$5;`,
