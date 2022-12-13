@@ -3,6 +3,10 @@ import { connection } from "../database/db.js";
 export async function create (req, res) {
     const { name, phone, cpf, birthday } = req.body;
 
+    if (cpf.length !== 11 || phone.length !== (10 || 11) || name.length === 0) {
+        return res.sendStatus(400);
+    }
+
     try {
         await connection.query(
             `INSERT INTO customers 
