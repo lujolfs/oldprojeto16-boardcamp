@@ -19,7 +19,15 @@ export async function create (req, res) {
 
 export async function findAll (req, res) {
     try {
-        const { rows } = await connection.query("SELECT * FROM games;");
+        const { rows } = await connection.query(`
+        SELECT 
+            games.*, categories.name AS "categoryName"
+        FROM 
+            games
+        JOIN
+            categories
+        ON
+            games."categoryId" = categories.id`);
         res.send(rows);
     } catch (err) {
         res.status(500).send(err.message);

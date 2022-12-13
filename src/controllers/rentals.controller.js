@@ -22,7 +22,7 @@ export async function create (req, res) {
         const originalPrice = pricePerDay * daysRented;
         await connection.query(
             `INSERT INTO rentals 
-                ("customerId", "gameId", "rentDate"::text, "daysRented", "returnDate", "originalPrice", "delayFee") 
+                ("customerId", "gameId", "rentDate", "daysRented", "returnDate", "originalPrice", "delayFee") 
             VALUES 
                 ($1, $2, $3, $4, $5, $6, $7);`,
             [customerId, gameId, rentDate, daysRented, null, originalPrice, null]
@@ -68,7 +68,7 @@ export async function findAll (req, res) {
             categories
         ON
             games."categoryId"=categories.id  `);
-        res.send(rentalsForm.rows[0]);
+        res.send(rentalsForm.rows);
     } catch (err) {
         res.status(500).send(err.message);
     }
